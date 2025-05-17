@@ -37,12 +37,32 @@ class ScheduleCard(tk.Frame):
         tk.Label(pres_frame, text="⏰ Waktu Presensi 07:06:30", fg="#0066CC").pack(side="left")
         tk.Label(pres_frame, text="Membuat rancangan penelitian", fg="gray").pack(side="right")
 
+        def tampilkan_halaman_berikutnya():
+            # btn.pack_forget()  # sembunyikan frame awal
+            frame_kedua.pack()
+
+        def kembali():
+            frame_kedua.forget()
+
         # Tombol aksi
         btn_frame = tk.Frame(self)
         btn_frame.pack(fill="x", pady=(5,0))
-        for txt in ["Zoom", "Materi Kuliah", "MMP", "Presensi"]:
-            btn = tk.Button(btn_frame, text=txt, relief="ridge", padx=8, pady=4)
-            btn.pack(side="left", expand=True, fill="x", padx=2)
+        # for txt in ["Zoom", "Materi Kuliah", "MMP", "Presensi"]:
+        btn = tk.Button(btn_frame, text="Zoom", relief="ridge", padx=8, pady=4, command=tampilkan_halaman_berikutnya)
+        btn.pack(side="left", expand=True, fill="x", padx=2)
+        btn = tk.Button(btn_frame, text="Materi Kuliah", relief="ridge", padx=8, pady=4, command=tampilkan_halaman_berikutnya)
+        btn.pack(side="left", expand=True, fill="x", padx=2)
+        btn = tk.Button(btn_frame, text="MMP", relief="ridge", padx=8, pady=4, command=kembali)
+        btn.pack(side="left", expand=True, fill="x", padx=2)
+        btn = tk.Button(btn_frame, text="Presensi", relief="ridge", padx=8, pady=4, command=kembali)
+        btn.pack(side="left", expand=True, fill="x", padx=2)
+
+        frame_kedua = tk.Frame(root)
+        label_kedua = tk.Label(frame_kedua, text="Ini halaman setelah tombol diklik")
+        label_kedua.pack()
+
+
+
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -52,3 +72,5 @@ if __name__ == "__main__":
     card = ScheduleCard(root)
     card.pack(padx=10, pady=10, fill="both", expand=True)
     root.mainloop()
+
+    
