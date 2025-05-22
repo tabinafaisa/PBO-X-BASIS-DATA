@@ -1,4 +1,4 @@
-from db import get_connection
+from utils.db import get_connection
 
 class Presensi:
     @staticmethod
