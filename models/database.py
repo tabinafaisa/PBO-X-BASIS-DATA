@@ -23,7 +23,7 @@ def get_jadwal_mahasiswa_hari_ini(id_user):
         p.Jam_selesai,
         pr.Waktu_presensi,
         sp.Keterangan AS Status,
-        m.NIM  -- Diperlukan untuk input presensi
+        m.NIM  
     FROM mahasiswa m
     JOIN users u ON m.Id_user = u.ID_User
     JOIN kelas_mahasiswa km ON m.NIM = km.NIM
@@ -53,28 +53,16 @@ def get_user_role_by_id(id_user):
         return result[0]
     return None
 
-def insert_presensi(nim, id_pertemuan):
-    conn = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="tugas_akhir"
-    )
+def insert_presensi(nim, id_pertemuan, kode_status):
+    conn = get_connection()
     cursor = conn.cursor()
-    
-    now = datetime.now().strftime('%H:%M:%S')
-    kode_status = 'H'  # Hadir
+    waktu = datetime.now().strftime("%H:%M:%S")
 
-    # Cek apakah sudah presensi
-    cursor.execute("SELECT * FROM presensi WHERE NIM = %s AND ID_Pertemuan = %s", (nim, id_pertemuan))
-    existing = cursor.fetchone()
-    if not existing:
-        cursor.execute("""
-            INSERT INTO presensi (ID_Pertemuan, NIM, Waktu_presensi, Kode_Status)
-            VALUES (%s, %s, %s, %s)
-        """, (id_pertemuan, nim, now, kode_status))
-        conn.commit()
-    
-    cursor.close()
+    cursor.execute("""
+        INSERT INTO presensi (NIM, ID_Pertemuan, Waktu_presensi, Kode_Status)
+        VALUES (%s, %s, %s, %s)
+        ON DUPLICATE KEY UPDATE Waktu_presensi=%s, Kode_Status=%s
+    """, (nim, id_pertemuan, waktu, kode_status, waktu, kode_status))
+
+    conn.commit()
     conn.close()
-
