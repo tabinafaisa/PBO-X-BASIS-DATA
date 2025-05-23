@@ -50,9 +50,10 @@ class App:
         MahasiswaView(self.root, id_user)
 
 
-    # def show_dosen_view(self, id_user):
-    #     self.clear_window()
-    #     DosenView(self.root, id_user)
+    def show_dosen_view(self, id_user):
+        self.clear_window()
+        from views.dosen_view import tampilkan_dosen_view
+        tampilkan_dosen_view(self.root, id_user)
 
     def clear_window(self):
         for widget in self.root.winfo_children():

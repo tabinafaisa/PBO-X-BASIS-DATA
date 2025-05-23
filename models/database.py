@@ -12,7 +12,7 @@ def get_jadwal_mahasiswa_hari_ini(id_user):
     cursor = conn.cursor(dictionary=True)
 
     query = """
-    SELECT 
+    SELECT DISTINCT
         p.ID_Pertemuan,
         mk.Nama_MK,
         d.Nama_Dosen,
