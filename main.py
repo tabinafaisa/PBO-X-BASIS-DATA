@@ -1,21 +1,3 @@
-# import tkinter as tk
-# from views.login_view import LoginWindow  # ✅ Import class, bukan fungsi
-
-# def main():
-#     root = tk.Tk()
-#     app = LoginWindow(root)  # ✅ Instansiasi class LoginWindow
-#     root.mainloop()
-
-# if __name__ == "__main__":
-# #     main()
-# from tkinter import Tk
-# from views.mahasiswa_view import MahasiswaView
-
-# if __name__ == "__main__":
-#     root = Tk()
-#     id_user = 2  # Ganti dengan id_user hasil login
-#     app = MahasiswaView(root, id_user)
-#     root.mainloop()
 import tkinter as tk
 from views.login_view import LoginWindow
 from views.mahasiswa_view import MahasiswaView
@@ -34,8 +16,6 @@ class App:
         LoginWindow(self.root, self.on_login_success)
 
     def on_login_success(self, id_user, role):
-        # Panggil ketika login berhasil
-        # role = get_user_role_by_id(id_user)
 
         if role == 'mahasiswa':
             self.show_mahasiswa_view(id_user)
@@ -45,7 +25,7 @@ class App:
             print("Role tidak dikenali:", role)
 
     def show_mahasiswa_view(self, id_user):
-        print("Menampilkan view mahasiswa")  # ⬅ Tambahkan
+        print("Menampilkan view mahasiswa")  
         self.clear_window()
         MahasiswaView(self.root, id_user)
 
