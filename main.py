@@ -1,6 +1,7 @@
 import tkinter as tk
 from views.login_view import LoginWindow
 from views.mahasiswa_view import MahasiswaView
+from utils.presensi_tools import insert_presensi_alpa
 # from views.dosen_view import DosenView  # Jika kamu punya
 from models.database import get_user_role_by_id  # Fungsi untuk cek role user
 
@@ -20,6 +21,7 @@ class App:
         if role == 'mahasiswa':
             self.show_mahasiswa_view(id_user)
         elif role == 'dosen':
+            insert_presensi_alpa()
             self.show_dosen_view(id_user)
         else:
             print("Role tidak dikenali:", role)

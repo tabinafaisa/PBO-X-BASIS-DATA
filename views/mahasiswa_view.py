@@ -44,7 +44,7 @@ class MahasiswaView:
         btn_state = "disabled" if sudah_presensi else "normal"
         Button(frame, text="Presensi", bg="green", fg="white", padx=20,
                state=btn_state,
-               command=lambda: self.dialog_status_presensi(data['ID_Pertemuan'], data['NIM'])).pack(pady=(10, 0))
+               command=lambda: self.dialog_status_presensi(data['ID_Pertemuan'], data['NIM'], data['Jam_mulai'], data['Jam_selesai'])).pack(pady=(10, 0))
 
     def hitung_durasi(self, jam_mulai, jam_selesai):
         try:
@@ -57,10 +57,20 @@ class MahasiswaView:
             jam = int(total_menit // 60)
             menit = int(total_menit % 60)
             return f"{jam}h{menit}m"
-        except Exception as e:
+        except Exception:
             return "Durasi tidak valid"
 
-    def dialog_status_presensi(self, id_pertemuan, nim):
+    def boleh_presensi(self, jam_mulai_str, jam_selesai_str):
+        now = datetime.now().time()
+        jam_mulai = datetime.strptime(str(jam_mulai_str), "%H:%M:%S").time()
+        jam_selesai = datetime.strptime(str(jam_selesai_str), "%H:%M:%S").time()
+        return jam_mulai <= now <= jam_selesai
+
+    def dialog_status_presensi(self, id_pertemuan, nim, jam_mulai, jam_selesai):
+        if not self.boleh_presensi(jam_mulai, jam_selesai):
+            messagebox.showwarning("Diluar Waktu", "Presensi hanya bisa dilakukan dalam rentang jam kuliah.")
+            return
+
         popup = Toplevel(self.root)
         popup.title("Pilih Status Presensi")
         popup.geometry("300x200")
