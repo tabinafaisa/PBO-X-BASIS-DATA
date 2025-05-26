@@ -1,4 +1,4 @@
-from .user import User
+from user import User
 
 class Dosen(User):
     def __init__(self, id_user, username, kode_dosen, nama_dosen):
